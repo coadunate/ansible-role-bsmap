@@ -1,0 +1,44 @@
+---
+
+- name: install development tools 
+  yum: 
+    name: "@Development tools"
+    state: present
+
+- name: install zlib files 
+  yum:
+    name: zlib-devel
+    state: present
+
+- name: Ensure that the software forlder already exists 
+  file: path={{ ansible_env.PWD }}/software state=directory mode=0777
+
+- name: download bsmap
+  get_url: 
+    url: http://lilab.research.bcm.edu/dldcc-web/lilab/yxi/bsmap/bsmap-2.90.tgz
+    dest: "{{ ansible_env.PWD }}"
+
+- name: unpack bsmap 
+  unarchive: 
+    src: "{{ ansible_env.PWD }}/bsmap-2.90.tgz"
+    dest: "{{ ansible_env.PWD }}/software"
+    copy: no
+
+- name: make bsmap 
+  make: 
+    chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
+
+- name: install bsmap 
+  make: 
+   chdir: "{{ ansible_env.PWD }}/software/bsmap-2.90"
+   target: install 
+
+- name: add bsmap to the PATH 
+  shell: echo export PATH={{ ansible_env.PWD }}/software/bsmap-2.90$PATH >> {{ ansible_env.PWD }}/.bashrc
+
+- name: remove gz file
+  file: 
+    state: absent 
+    path: "{{ ansible_env.PWD }}/bsmap-2.90.tgz"
+
+

@@ -1,5 +1,14 @@
----
-- hosts: localhost
+--- 
+- hosts: all 
   remote_user: root
-  roles:
-    - ansible-role-bsmap
+  gather_facts: yes
+  tasks: 
+  - include_role: 
+      name: coadunate.devtools
+
+  - include_role: 
+      name: bsmap
+
+  - include_role: 
+      name: nanopolish 
+

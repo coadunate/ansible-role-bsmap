@@ -1,2 +1,1 @@
----
-# vars file for ansible-role-bsmap
+ansible_become_pass: manager
