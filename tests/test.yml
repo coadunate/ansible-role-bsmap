@@ -4,4 +4,4 @@
   tasks: 
 
   - include_role: 
-      name: bsmap
+      name: coadunate.bsmap
